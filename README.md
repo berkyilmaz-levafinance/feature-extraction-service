@@ -5,4 +5,4 @@ repository for ai developments
 
 Aşağıdaki projeler bu template'ten oluşturulmuştur:
 
-- (https://github.com/Software-Management-System/fib-news-ai)]
+- (https://github.com/Software-Management-System/feature-extraction-service)
