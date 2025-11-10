@@ -5,4 +5,4 @@ repository for ai developments
 
 Aşağıdaki projeler bu template'ten oluşturulmuştur:
 
--[[Organization App - AI Side](https://github.com/Software-Management-System/fib-news-ai)]](https://github.com/berkyilmaz-levafinance/news-duplicate-service)
+[-[[Organization App - AI Side](https://github.com/Software-Management-System/fib-news-ai)]][(https://github.com/berkyilmaz-levafinance/news-duplicate-service)](https://github.com/Software-Management-System/feature-extraction-service)](https://github.com/Software-Management-System/feature-extraction-service)
