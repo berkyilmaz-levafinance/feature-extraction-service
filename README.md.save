@@ -1,0 +1,54 @@
+┌─────────────────────────────────────────────────────────────┐
+│                      AWS RDS PostgreSQL                      │
+│                                                               │
+│  news table:                                                  │
+│  ┌────┬────────────┬─────────────────────────────────────┐  │
+│  │ id │   title    │ status                              │  │
+│  ├────┼────────────┼─────────────────────────────────────┤  │
+│  │ 1  │ TCMB...    │ semantik_analiz_icin_sirada        │  │
+│  │ 2  │ Borsa...   │ semantik_analiz_icin_sirada        │  │
+│  │ 3  │ Dolar...   │ kuyrukta                           │  │
+│  │ 4  │ Enflasyon..│ semantik_analiz_tamamlandi         │  │
+│  └────┴────────────┴─────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+                            ▲ ▼
+                            │ │
+        ┌───────────────────┘ └───────────────────┐
+        │                                          │
+        ▼                                          ▼
+┌─────────────────┐                    ┌─────────────────┐
+│  QUEUE MANAGER  │                    │ FEATURE WORKER  │
+│   (Servis 1)    │                    │   (Servis 2)    │
+│                 │                    │                 │
+│  Her 30 saniye: │                    │  Sürekli:       │
+│  1. DB'den al   │───────────┐        │  1. Queue'dan al│
+│  2. Queue'ya at │           │        │  2. Grok API    │
+└─────────────────┘           │        │  3. Feature'ları│
+                              ▼        │     kaydet      │
+                    ┌──────────────┐   └─────────────────┘
+                    │  CloudAMQP   │            │
+                    │  (RabbitMQ)  │────────────┘
+                    │              │
+                    │ Queue:       │
+                    │ [Msg1, Msg2] │
+                    └──────────────┘
+                              ▲
+                              │
+                    ┌─────────┴────────┐
+                    │ RECOVERY SERVICE │
+                    │   (Servis 3)     │
+                    │                  │
+                    │  Her 10 dakika:  │
+                    │  Stuck haberleri │
+                    │  tespit et       │
+                    └──────────────────┘
+
+
+# fib-news-ai
+repository for ai developments
+
+# Türetilen Projeler (fib-news-ai)
+
+Aşağıdaki projeler bu template'ten oluşturulmuştur:
+
+- (https://github.com/Software-Management-System/feature-extraction-service)
