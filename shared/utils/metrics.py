@@ -12,9 +12,6 @@ Referanslar:
     - Prometheus Best Practices: https://prometheus.io/docs/practices/naming/
     - RED Metodu: Rate, Errors, Duration
     - USE Metodu: Utilization, Saturation, Errors
-
-Yazar: Berk Yilmaz
-Son Güncelleme: 2025-11-12
 """
 
 from prometheus_client import Counter, Histogram, Gauge, Info

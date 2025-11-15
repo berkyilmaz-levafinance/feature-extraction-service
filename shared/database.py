@@ -109,6 +109,46 @@ class VeriHavuzuYoneticisi:
             self.pool = None
             logger.info("DATABASE --- KAPANDI --- Pool kapatildi")
 
+    # Haberi ID ile getirmek extractor dosyasinda isimize yariyor
+    async def haber_id_ile_getir(self, haber_id: int) -> Optional[Dict[str, Any]]:
+        """
+        Tek bir haberi ID ile çeker
+
+        Args:
+            haber_id: Haberin ID'si
+
+        Returns:
+            Dict: Haber bilgileri (id, title, content, source, published_date)
+            None: Haber bulunamazsa
+        """
+        if not self.pool:
+            await self.baglanti_ac()
+
+        try:
+            async with self.pool.acquire() as conn:
+                query = """
+                    SELECT 
+                        id,
+                        title,
+                        content,
+                        source,
+                        published_date
+                    FROM news
+                    WHERE id = $1
+                """
+
+                row = await conn.fetchrow(query, haber_id)
+
+                if row:
+                    logger.debug(f"DATABASE --- BASARILI --- Haber ID {haber_id} çekildi")
+                    return dict(row)
+                else:
+                    logger.warning(f"DATABASE --- UYARI --- Haber ID {haber_id} bulunamadı")
+                    return None
+
+        except Exception as e:
+            logger.error(f"DATABASE --- HATA --- Haber çekme hatası (ID: {haber_id}): {e}")
+
     # Ilk haberleri cekerken is_duplicate kisminin False olmasi lazim
     # Approved kiminin da semantik_analiz_icin_sirada seklinde olanlari al
     async def haberleri_getir(self, limit: int = 100, max_deneme: int = 3) -> List[Dict[str, Any]]:
