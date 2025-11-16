@@ -1,0 +1,12 @@
+# requirements.txt
+
+# Database
+asyncpg==0.29.0
+
+# Configuration
+pydantic==2.5.0
+pydantic-settings==2.1.0
+python-dotenv==1.0.0
+
+# Logging
+python-json-logger==2.0.7
